@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!-- This file is part of Tryton.  The COPYRIGHT file at the top level of
+this repository contains the full copyright notices and license terms. -->
+<tryton>
+    <data>
+
+        <record model="ir.action.wizard" id="wizard_asociadas_crear_facturacion">
+            <field name="name">Crear facturas de asociadas</field>
+            <field name="wiz_name">wizard_facturacion.crear_facturacion</field>
+        </record>
+
+        <!--keyword wizard-->
+        <record model="ir.action.keyword" id="act_open_crear_facturacion">
+            <field name="keyword">form_action</field>
+            <field name="model">account.invoice,-1</field>
+            <field name="action" ref="wizard_asociadas_crear_facturacion"/>
+        </record>
+
+        <record model="ir.ui.view" id="view_crear_facturacion_start_form">
+            <field name="model">wizard_facturacion.crear_facturacion.start</field>
+            <field name="type">form</field>
+            <field name="name">crear_facturacion_start_form</field>
+        </record>
+
+        <menuitem action="wizard_asociadas_crear_facturacion" id="menu_wizard_facturacion_crear_facturacion"/>
+
+    </data>
+</tryton>

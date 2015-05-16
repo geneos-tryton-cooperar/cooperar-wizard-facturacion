@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<form string="Crear facturas de asociadas" col="6">
+    <label name="mes"/>
+    <field name="mes"/>
+    <label name="anio"/>
+    <field name="anio"/>
+    <label name="fecha_emision_factura"/>
+    <field name="fecha_emision_factura"/>
+</form>
