@@ -1,5 +1,5 @@
 from trytond.pool import Pool
-from .wizard_facturacion import CrearFacturacionStart, CrearFacturacion
+from .wizard_facturacion import CrearFacturacionStart, CrearFacturacion, AutorizarFe
 
 def register():
     Pool.register(
