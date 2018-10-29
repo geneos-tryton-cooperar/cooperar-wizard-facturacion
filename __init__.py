@@ -8,4 +8,5 @@ def register():
 
     Pool.register(
         CrearFacturacion,
+        AutorizarFe, 
         module='cooperar-wizard-facturacion', type_='wizard')
