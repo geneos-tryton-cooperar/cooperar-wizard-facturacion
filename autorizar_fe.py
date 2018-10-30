@@ -21,7 +21,7 @@ class AutorizarFe(Wizard):
     __name__ = 'wizard_facturacion.autorizarfe'
 
     start = StateView('wizard_facturacion.autorizarfe.start',
-        'wizard_facturacion.autorizarfe_start_view_form', [
+        'cooperar-wizard-facturacion.autorizarfe_start_view_form', [
             Button('Cancel', 'end', 'tryton-cancel'),
             Button('Autorizar Comprobantes', 'autorizar', 'tryton-ok', default=True),
             ])
