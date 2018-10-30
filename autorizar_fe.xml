@@ -18,5 +18,7 @@ this repository contains the full copyright notices and license terms. -->
         <menuitem name="Solicitar CAE Fac.Electrónica" parent="wizard_facturacion.menu_procesos"
              id="menu_autorizar_fe"
              sequence="30" action="wizard_autorizarfe"/>
+
+
     </data>
 </tryton>
