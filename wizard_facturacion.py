@@ -100,12 +100,11 @@ class CrearFacturacion(Wizard):
 
     def crear_sale(self, asociada):
         #Esta funcion se llama una vez por asociada.
-        import pudb; pu.db
+        #import pudb; pu.db
         Sale = Pool().get('sale.sale')
         party = asociada
         
-        pos = self.buscar_pos()
-        
+
         with Transaction().set_context({"customer": party}):
             #Creamos la venta a la que le vamos a asociar las lineas de venta
             descripcion = str('Cuota sostenimiento - ' + party.name.encode('utf-8'))
@@ -113,7 +112,6 @@ class CrearFacturacion(Wizard):
                     party = party,
                     description = str(descripcion),
                     payment_term = 1,
-                    pos = pos
             )
 
             #Creamos las lineas para los distintos tipos de productos
