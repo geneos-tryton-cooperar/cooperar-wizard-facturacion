@@ -112,6 +112,7 @@ class CrearFacturacion(Wizard):
                     party = party,
                     description = str(descripcion),
                     payment_term = 1,
+                    invoice_type = 2,
             )
 
             #Creamos las lineas para los distintos tipos de productos
