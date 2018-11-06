@@ -104,6 +104,7 @@ class CrearFacturacion(Wizard):
         Sale = Pool().get('sale.sale')
         party = asociada
         
+        pos = self.buscar_pos()
 
         with Transaction().set_context({"customer": party}):
             #Creamos la venta a la que le vamos a asociar las lineas de venta
@@ -112,7 +113,7 @@ class CrearFacturacion(Wizard):
                     party = party,
                     description = str(descripcion),
                     payment_term = 1,
-                    invoice_type = 2,
+                    pos = pos,
             )
 
             #Creamos las lineas para los distintos tipos de productos
