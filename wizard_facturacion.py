@@ -141,7 +141,7 @@ class CrearFacturacion(Wizard):
             if sale.invoices:
                 #Busco el POS
                 Pos = Pool().get('account.pos')
-                pos = Pos.search([('pos_type','=','manual'), ('number','=', 1) ])
+                pos = Pos.search([('pos_type','=','electronic'), ('number','=', 3) ])
                 
                 sale.invoices[0].invoice_date = self.start.fecha_emision_factura
                 if pos:
