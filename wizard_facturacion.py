@@ -48,7 +48,7 @@ class CrearFacturacion(Wizard):
 
 
     def crear_facturas(self):
-        import pudb;pu.db
+        #import pudb;pu.db
         Asociadas = Pool().get('party.party')
         filtro_asociadas = [
                 ('asociada', '=', True), 
