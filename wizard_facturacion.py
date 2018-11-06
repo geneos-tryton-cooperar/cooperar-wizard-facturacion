@@ -100,7 +100,7 @@ class CrearFacturacion(Wizard):
 
     def crear_sale(self, asociada):
         #Esta funcion se llama una vez por asociada.
-        #import pudb; pu.db
+        import pudb; pu.db
         Sale = Pool().get('sale.sale')
         party = asociada
         
