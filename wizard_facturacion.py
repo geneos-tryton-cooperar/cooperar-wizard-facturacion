@@ -97,7 +97,8 @@ class CrearFacturacion(Wizard):
             descripcion = str('Cuota sostenimiento - ' + party.name.encode('utf-8'))
             sale = Sale(
                     party = party,
-                    description = str(descripcion)
+                    description = str(descripcion),
+                    payment_term = self.default_payment_term()
             )
 
             #Creamos las lineas para los distintos tipos de productos
@@ -125,7 +126,6 @@ class CrearFacturacion(Wizard):
             sale.invoice_address = sale.party.address_get(type='invoice')
             sale.shipment_address = sale.party.address_get(type='delivery')
 
-            sale.payment_term = self.default_payment_term()
             sale.quote([sale])
 
             #Avanzamos a confirmado
