@@ -98,7 +98,7 @@ class CrearFacturacion(Wizard):
             sale = Sale(
                     party = party,
                     description = str(descripcion),
-                    payment_term = self.default_payment_term()
+                    payment_term = 1
             )
 
             #Creamos las lineas para los distintos tipos de productos
