@@ -120,7 +120,7 @@ class CrearFacturacion(Wizard):
                 i.save()
             sale.save()
             '''
-
+            import pudb;pu.db
             #Avanzamos a presupuesto
             sale.invoice_address = sale.party.address_get(type='invoice')
             sale.shipment_address = sale.party.address_get(type='delivery')
