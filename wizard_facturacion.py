@@ -145,7 +145,6 @@ class CrearFacturacion(Wizard):
 
             #Avanzamos a confirmado
             sale.confirm([sale])
-            sale.save()
 
             #Avanzamos a procesado. En este estado se crea la factura
             #de la venta.
@@ -158,16 +157,16 @@ class CrearFacturacion(Wizard):
             
             if sale.invoices:
                 #Busco el POS
-                Pos = Pool().get('account.pos')
-                pos = Pos.search([('pos_type','=','electronic'), ('number','=', 3) ])
+                #Pos = Pool().get('account.pos')
+                #pos = Pos.search([('pos_type','=','electronic'), ('number','=', 3) ])
                 
                 sale.invoices[0].invoice_date = self.start.fecha_emision_factura
-                if pos:
-                    sale.invoices[0].pos = pos[0]
-                sale.invoices[0].invoice_type = sale.invoices[0].on_change_pos()["invoice_type"]
+                #if pos:
+                #    sale.invoices[0].pos = pos[0]
+                #sale.invoices[0].invoice_type = sale.invoices[0].on_change_pos()["invoice_type"]
                 sale.invoices[0].save()
-                sale.invoices[0].post([sale.invoices[0]])
-                sale.invoices[0].save()
+                #sale.invoices[0].post([sale.invoices[0]])
+                #sale.invoices[0].save()
 
 
     def crear_cuota(self, asociada):
