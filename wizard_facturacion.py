@@ -4,6 +4,7 @@ from trytond.model import ModelView, fields
 from trytond.wizard import Wizard, StateView, StateTransition, Button
 from trytond.transaction import Transaction
 import datetime
+import calendar
 from decimal import Decimal
 
 class CrearFacturacionStart(ModelView):
@@ -87,6 +88,7 @@ class CrearFacturacion(Wizard):
         new_line.unit_price = unit_price
         return new_line
 
+
     
     def buscar_pos(self):
         Pos = Pool().get('account.pos')
@@ -101,6 +103,11 @@ class CrearFacturacion(Wizard):
     def crear_sale(self, asociada):
         #Esta funcion se llama una vez por asociada.
         #import pudb; pu.db
+
+        monthrange = calendar.monthrange(self.start.anio, int(self.start.mes))
+        fi_date = datetime.date(self.start.anio, int(self.start.mes), 1)
+        ff_date = datetime.date(self.start.anio, int(self.start.mes), monthrange[1])
+
         Sale = Pool().get('sale.sale')
         party = asociada
         
@@ -124,18 +131,16 @@ class CrearFacturacion(Wizard):
             sale.lines = sale_lines
             sale.save()
 
-
-            '''
-            #Aplicamos los impuestos que correspondan a cada linea de venta
             Tax = Pool().get('account.tax')
             for i in sale.lines:
-                tax_ids = i.on_change_product().get("taxes")#lista de ids
+                up = i.unit_price
+                tax_ids = i.on_change_product().get("taxes")  # lista de ids
+                i.unit_price = up
                 tax_browse_records = Tax.browse(tax_ids) or []
-                extra_tax_browse_records = self.get_extra_taxes(i.product, suministro, party)
-                i.taxes = tuple(tax_browse_records) + tuple(extra_tax_browse_records)
+                i.taxes = tuple(tax_browse_records)
                 i.save()
             sale.save()
-            '''
+
 
             #Avanzamos a presupuesto
             sale.invoice_address = sale.party.address_get(type='invoice')
@@ -154,19 +159,12 @@ class CrearFacturacion(Wizard):
             sale.save()
 
             #Seteamos las fechas de creacion, punto de venta y tipo de factura.
-            
             if sale.invoices:
-                #Busco el POS
-                #Pos = Pool().get('account.pos')
-                #pos = Pos.search([('pos_type','=','electronic'), ('number','=', 3) ])
-                
                 sale.invoices[0].invoice_date = self.start.fecha_emision_factura
-                #if pos:
-                #    sale.invoices[0].pos = pos[0]
-                #sale.invoices[0].invoice_type = sale.invoices[0].on_change_pos()["invoice_type"]
+                sale.invoices[0].pyafipws_concept = 2
+                sale.invoices[0].pyafipws_billing_start_date = fi_date
+                sale.invoices[0].pyafipws_billing_end_date = ff_date
                 sale.invoices[0].save()
-                #sale.invoices[0].post([sale.invoices[0]])
-                #sale.invoices[0].save()
 
 
     def crear_cuota(self, asociada):
@@ -179,8 +177,4 @@ class CrearFacturacion(Wizard):
         cuota.pagada = False
         cuota.monto = asociada.monto_actual_cuota 
         cuota.save()
-
-       
-
-
 
