@@ -102,7 +102,7 @@ class CrearFacturacion(Wizard):
 
     def crear_sale(self, asociada):
         #Esta funcion se llama una vez por asociada.
-        import pudb; pu.db
+        #import pudb; pu.db
 
         monthrange = calendar.monthrange(self.start.anio, int(self.start.mes))
         fi_date = datetime.date(self.start.anio, int(self.start.mes), 1)
