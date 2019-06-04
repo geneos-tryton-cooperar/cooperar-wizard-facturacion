@@ -60,7 +60,7 @@ class CrearFacturacion(Wizard):
             self.crear_cuota(asociada)
 
 
-    def crear_sale_lines_cuota_sostenimiento(self, asociada):
+    def crear_sale_lines_cuota_sostenimiento(self, asociada, fecha_txt):
         ret = []
         monto_cuota = Decimal(asociada.monto_actual_cuota)
 
@@ -68,11 +68,11 @@ class CrearFacturacion(Wizard):
         productos = Producto.search([('name','=','Cuota Sostenimiento')])
 
         for producto in productos:
-            ret.append(self.crear_sale_line(1, producto, monto_cuota))
+            ret.append(self.crear_sale_line(1, producto, monto_cuota, fecha_txt))
         return ret  
 
 
-    def crear_sale_line(self, amount, product, unit_price):
+    def crear_sale_line(self, amount, product, unit_price, fecha_txt):
         """
         Creamos una linea de ventas de acuerdo a los parametros que recibimos.
         """
@@ -81,7 +81,7 @@ class CrearFacturacion(Wizard):
         new_line = SaleLine(
                 product=product,
                 quantity=Decimal(amount),
-                description=product.name + " - " + str(amount),
+                description=product.name + " - " + str(fecha_txt),
                 unit=product.default_uom,
                 )
 
@@ -126,7 +126,10 @@ class CrearFacturacion(Wizard):
             #Creamos las lineas para los distintos tipos de productos
             sale_lines = []
 
-            sale_lines.extend(self.crear_sale_lines_cuota_sostenimiento(asociada))
+            #fecha_txt
+            fecha_txt = str(self.start.mes) + "/" + str(self.start.anio)
+
+            sale_lines.extend(self.crear_sale_lines_cuota_sostenimiento(asociada, fecha_txt))
            
             sale.lines = sale_lines
             sale.save()
